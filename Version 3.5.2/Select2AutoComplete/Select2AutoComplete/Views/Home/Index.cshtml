@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Select2 AutoComplete Example";
+}
+
+<h2>Select2 Version 3.5.2</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div id="searchHelpDocs"></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/site.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        @*Create HTML Formatted Result*@
+        function formatData(data) {
+            var $dataFormat = data.Title + '<div class="pull-right"><button style="background-color:inherit; border:none"  title="Click here to download this item." class="btn-icon text-success fa fa-download fa-lg" /> <a style="margin-right:1rem" title="Open media link." class="fa fa-video-camera helpVideo" href=' + data.MediaLink + ' target="_blank"></a></div>';
+            return $dataFormat;
+        }
+
+        @*Apply the Select2 AutoComplete to the searchHelpDocs ID*@
+        var select2 = $("#searchHelpDocs").select2(
+                {
+                    placeholder: "Search",
+                    minimumInputLength: 4,
+                    allowClear: true,
+                    ajax: {
+                        url: "/api/search/search",
+                        dataType: 'json',
+                        quietMillis: 250,
+                        data: function (term) {
+                            return {
+                                term: term // search term                                
+                            };
+                        },
+                        results: function (data) { // parse the results into the format expected by Select2.
+                            // since we are using custom formatting functions we do not need to alter the remote JSON data
+                            return { results: data };
+                        },
+                        cache: false
+                    },
+                    formatSelection: function (item) { return item.title; },
+                    formatResult: formatData,
+                    escapeMarkup: function (m) { return m; } // we do not want to escape markup since we are displaying html in results                    
+                }
+            )
+                .on("select2-selecting", function (e) {
+                    e.preventDefault();
+                })
+                .on("select2-select", function (e) {
+                        e.preventDefault();                    
+                })
+                .data('select2');
+
+        @*Override default select functionality*@
+        select2.onSelect = (function (fn) {
+            return function (data, options) {
+                var target;
+                if (options != null) {
+                    target = $(options.target);
+                }
+                if (target) {
+                    if (target.hasClass('helpVideo')) {
+                        window.open(data.MediaLink, '_blank');
+                    }
+                    else if (target.hasClass('fa-download')) {
+                        // Download implementation goes here
+                    }
+                    //else {
+                    //    return fn.apply(this, arguments);
+                    //}
+                }
+            }
+        })(select2.onSelect);
+        
+    });
+</script>
