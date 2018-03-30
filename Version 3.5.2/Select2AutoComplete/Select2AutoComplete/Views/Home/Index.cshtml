@@ -33,6 +33,7 @@
                     placeholder: "Search",
                     minimumInputLength: 4,
                     allowClear: true,
+                    id: function(data){return data.ID},
                     ajax: {
                         url: "/api/search/search",
                         dataType: 'json',
