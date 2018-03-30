@@ -1,6 +1,9 @@
 # Select2AutoComplete
 The purpose of this repository is to demonstrate some of the ways to customize the Select2 AutoComplete/Dropdown UI control.
 
+# Versions
+As of now, the example I provided uses Select2 3.5.2. There are known CSS class changes between this version and 4.0, but time doesn't allow me to make that demo at this time.
+
 # Project Origins
 This project started because I worked on a help center page where the help articles were PDF or DOCX files that a user could download vs web pages. We broke the different help articles into different tabs based on category, but wanted a way to search across all categories. Given that the articles themselves weren't web pages, it didn't make sense to take them to a new landing page with matching results.
 
