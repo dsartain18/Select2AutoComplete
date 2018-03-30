@@ -1,3 +1,26 @@
-﻿#s2id_searchHelpDocs {
+.helpVideo {
+    color: #428bca;
+    font-style: normal;
+    margin-left: 5px;
+}
+
+/*Override Select2 styles*/
+#s2id_searchHelpDocs {
     width:100%;
+}
+.select2-results .select2-result-label {
+    padding: 3px 7px 4px;
+    margin: 0;
+    cursor: default !important;
+    min-height: 1em;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.select2-results .select2-highlighted {
+    background-color:lightgrey !important;
+    color: #fff;
 }
